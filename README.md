@@ -9,6 +9,15 @@ Basically, if Windows Explorer haven't evolved yet to have browser-like tabs - y
 1. Browse multiple Windows drives
 2. Files can be opened directly from browser in their native program, just click
 
+## To-do
+
+1. Tidy up navigation page template
+2. (For windows) Main page should display all drives
+3. (See **Disclaimer**) Is it possible to verify origin of click while running programs?
+4. Search in current directory
+5. Search in other directories
+6. Linux based directory structure support
+
 ## Disclaimer
 
 For some very good reasons, your average web apps aren't allowed (or limited) to interact with your system outside of browser. This tool overcomes said limitation by utilizing custom written Python server to launch the program instead.
