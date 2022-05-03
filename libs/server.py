@@ -76,20 +76,16 @@ class FilerHandler(SimpleHTTPRequestHandler):
             displaypath = urllib.parse.unquote(path)
         displaypath = html.escape(displaypath, quote=False)
         enc = sys.getfilesystemencoding()
-        title = 'Filer - %s' % displaypath
         r.append('<ul class="directory-list">')
         for name in list:
             fullname = os.path.join(path, name)
             displayname = linkname = name
             # Append / for directories or @ for symbolic links
             if os.path.isdir(fullname):
-                displayname = name + "/"
-                linkname = name + "/"
                 classname = "folder-item"
             else:
                 classname = "file-item"
             if os.path.islink(fullname):
-                displayname = name + "@"
                 classname = "folder-item"
                 # Note: a link to a directory displays with @ and links with /
             r.append('<a href="%s" title="%s"><li class="directory-item %s">%s</li></a>'
@@ -102,7 +98,14 @@ class FilerHandler(SimpleHTTPRequestHandler):
                     )
         r.append('</ul>')
         app = '\n'.join(r)
-        page = template.format(style, preScript, app, postScript)
+        title = " &#x2771; ".join(displaypath.split("/")[1:])
+        page = template.format(
+            style, 
+            preScript, 
+            app, 
+            postScript,
+            title
+        )
         encoded = page.encode(enc, 'surrogateescape')
         f = io.BytesIO()
         f.write(encoded)

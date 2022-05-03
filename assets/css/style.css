@@ -2,7 +2,14 @@ body {
     padding: 0;
     background-color: rgb(30, 41, 59);
     color: rgb(245, 222, 179);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.head {
+    background-color: rgb(20, 28, 41);
+    border-radius: 10px;
+    padding: 20px 40px;
+    margin: 20px 20px;
 }
 
 .app {
@@ -13,7 +20,7 @@ body {
 }
 
 a {
-    color: rgb(216, 191, 216);
+    color: rgb(216, 209, 115);
     text-decoration: none;
     font-weight: bold;
 }
@@ -28,18 +35,27 @@ a {
 }
 
 .directory-list a {
+    outline: 2px solid rgb(6, 199, 70);
     border-radius: 3px;
     display: inline-block;
-    padding: 20px 10px;
-    overflow:hidden; 
-    white-space:nowrap; 
+    padding: 15px 20px 20px 20px;
+    overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-/* .folder-item::before {
-    content: '📂';
+.directory-list a li {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;   
 }
 
-.file-item::before {
-    content: '\0FE0F';
-} */
+.directory-list a li.folder-item:before {
+    content: "📁 ";
+    font-size: 30px;
+}
+
+.directory-list a li.file-item:before {
+    content: "📝 ";
+    font-size: 30px;
+}
