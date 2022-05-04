@@ -58,3 +58,13 @@ a {
     content: "📝 ";
     font-size: 30px;
 }
+
+.directory-list a li.drive-item {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.directory-list a li.drive-item:before {
+    content: "💾 ";
+    font-size: 30px;
+}

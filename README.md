@@ -13,12 +13,12 @@ Basically, if Windows Explorer haven't evolved yet to have browser-like tabs - y
 
 ## To-do
 
-1. Tidy up navigation page template
-2. (For windows) Main page should display all drives
-3. (See **Disclaimer**) Is it possible to verify origin of click while running programs?
-4. Search in current directory
-5. Search in other directories
-6. Linux based directory structure support
+1. [x] (For windows) Main page should display all drives
+2. [ ] Tidy up navigation page template
+3. [ ] (See **Disclaimer**) Is it possible to verify origin of click while running programs?
+4. [ ] Search in current directory
+5. [ ] Search in other directories
+6. [ ] Linux based directory structure support
 
 ## Disclaimer
 

@@ -4,6 +4,7 @@ import posixpath
 import html
 import sys
 import io
+import win32api
 
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler
@@ -60,13 +61,35 @@ class FilerHandler(SimpleHTTPRequestHandler):
         interface the same as for send_head().
 
         """
-        try:
-            list = os.listdir(path)
-        except OSError:
-            self.send_error(
-                HTTPStatus.NOT_FOUND,
-                "No permission to list directory")
-            return None
+        print(path)
+        if path=='/':
+            try:
+                encoded = self.list_drives()
+            except OSError:
+                self.send_error(
+                    HTTPStatus.NOT_FOUND,
+                    "No permission to list directory")
+                return None
+        else:
+            try:
+                encoded = self.list_dir(path)
+            except OSError:
+                self.send_error(
+                    HTTPStatus.NOT_FOUND,
+                    "No permission to list directory")
+                return None
+        f = io.BytesIO()
+        enc = sys.getfilesystemencoding()
+        f.write(encoded)
+        f.seek(0)
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-type", "text/html; charset=%s" % enc)
+        self.send_header("Content-Length", str(len(encoded)))
+        self.end_headers()
+        return f
+    
+    def list_dir(self, path):
+        list = os.listdir(path)
         list.sort(key=lambda a: a.lower())
         r = []
         try:
@@ -107,11 +130,35 @@ class FilerHandler(SimpleHTTPRequestHandler):
             title
         )
         encoded = page.encode(enc, 'surrogateescape')
-        f = io.BytesIO()
-        f.write(encoded)
-        f.seek(0)
-        self.send_response(HTTPStatus.OK)
-        self.send_header("Content-type", "text/html; charset=%s" % enc)
-        self.send_header("Content-Length", str(len(encoded)))
-        self.end_headers()
-        return f
+        return encoded
+    
+    def list_drives(self):
+        drives = win32api.GetLogicalDriveStrings()
+        drives = drives.split('\\\000')[:-1]
+        r = []
+        enc = sys.getfilesystemencoding()
+        r.append('<ul class="directory-list">')
+        for drive in drives:
+            classname = "drive-item"
+            linkname = drive+"/"
+                # Note: a link to a directory displays with @ and links with /
+            r.append('<a href="%s" title="%s"><li class="directory-item %s">%s</li></a>'
+                        % (
+                            urllib.parse.quote(linkname, errors='surrogatepass'),
+                            drive,
+                            classname, 
+                            drive
+                        )
+                    )
+        r.append('</ul>')
+        app = '\n'.join(r)
+        title = "Home"
+        page = template.format(
+            style, 
+            preScript, 
+            app, 
+            postScript,
+            title
+        )
+        encoded = page.encode(enc, 'surrogateescape')
+        return encoded
