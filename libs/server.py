@@ -98,7 +98,7 @@ class FilerHandler(SimpleHTTPRequestHandler):
                     )
         r.append('</ul>')
         app = '\n'.join(r)
-        title = " &#x2771; ".join(displaypath.split("/")[1:])
+        title = " &#x276D; ".join(displaypath.split("/")[1:])
         page = template.format(
             style, 
             preScript, 
