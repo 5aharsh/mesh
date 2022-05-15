@@ -61,7 +61,6 @@ class FilerHandler(SimpleHTTPRequestHandler):
         interface the same as for send_head().
 
         """
-        print(path)
         if path=='/':
             try:
                 encoded = self.list_drives()

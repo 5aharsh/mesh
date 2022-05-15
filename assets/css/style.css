@@ -20,8 +20,10 @@ body {
 }
 
 a {
-    color: rgb(216, 209, 115);
+    color: rgb(160, 208, 240);
     text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    text-shadow: 1px 1px 1px #000;
 }
 
 .directory-list {
@@ -34,13 +36,19 @@ a {
 }
 
 .directory-list a {
-    outline: 2px solid rgb(6, 199, 70);
+    outline: 2px solid rgba(26, 128, 196);
     border-radius: 3px;
     display: inline-block;
     padding: 15px 20px 20px 20px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+.directory-list a:hover {
+    background: rgba(26, 128, 196);
+    color: #fff;
+    outline: 2px solid #fff;
 }
 
 .directory-list a li {
