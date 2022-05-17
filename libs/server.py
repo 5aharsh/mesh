@@ -121,12 +121,30 @@ class FilerHandler(SimpleHTTPRequestHandler):
                     )
         r.append('</ul>')
         app = '\n'.join(r)
+        navurl = "/"
+        navitem = []
+        navitem.append('<a href="%s" class="navpath">%s</a>'
+            % (
+                navurl,
+                "Home"
+            )
+        )
+        for i in displaypath.split("/")[1:]:
+            navurl+="%s/" % (i)
+            navitem.append('<a href="%s" class="navpath">%s</a>'
+                    % (
+                        navurl,
+                        i
+                    )
+                )
+        navhead = " &#x276D; ".join(navitem)
         title = " &#x276D; ".join(displaypath.split("/")[1:])
         page = template.format(
             style, 
             preScript, 
             app, 
             postScript,
+            navhead,
             title
         )
         encoded = page.encode(enc, 'surrogateescape')
@@ -159,6 +177,7 @@ class FilerHandler(SimpleHTTPRequestHandler):
             preScript, 
             app, 
             postScript,
+            title,
             title
         )
         encoded = page.encode(enc, 'surrogateescape')

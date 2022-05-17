@@ -60,7 +60,7 @@ a {
     text-overflow: ellipsis;
 }
 
-.directory-list a:hover {
+.directory-list a:hover, .directory-list a:focus {
     background: rgba(26, 128, 196);
     color: #fff;
     outline: 2px solid #fff;
