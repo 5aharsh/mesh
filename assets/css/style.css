@@ -12,6 +12,21 @@ body {
     margin: 20px 20px;
 }
 
+.search {
+    background-color: rgb(20, 28, 41);
+    border-radius: 10px;
+    padding: 20px 40px;
+    margin: 10px 20px;
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    gap: 10px;
+}
+
+.search #category, .search #search-text, .search #search-btn {
+    font-size: 1.2em;
+    padding: 5px;
+}
+
 .app {
     background-color: rgb(20, 28, 41);
     border-radius: 10px;

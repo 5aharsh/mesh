@@ -14,6 +14,15 @@
 </head>
 <body>
 <h1 class="head">{4}</h1>
+<div class="search">
+    <select name="category" id="category">
+        <option value="this" selected>This directory</option>
+        <option value="child">Child directories</option>
+        <option value="all">Everywhere</option>
+    </select>
+    <input type="search" name="q" id="search-text" placeholder="Search...">
+    <input type="button" id="search-btn" value="Search">
+</div>
 <div class="app">
 {2}
 </div>

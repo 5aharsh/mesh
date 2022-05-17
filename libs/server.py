@@ -110,9 +110,10 @@ class FilerHandler(SimpleHTTPRequestHandler):
             if os.path.islink(fullname):
                 classname = "folder-item"
                 # Note: a link to a directory displays with @ and links with /
-            r.append('<a href="%s" title="%s"><li class="directory-item %s">%s</li></a>'
+            r.append('<a href="%s" title="%s" meta-name="%s" class="directory-link"><li class="directory-item %s">%s</li></a>'
                         % (
                             urllib.parse.quote(linkname, errors='surrogatepass'),
+                            html.escape(displayname, quote=False),
                             html.escape(displayname, quote=False),
                             classname, 
                             html.escape(displayname, quote=False)
@@ -141,10 +142,11 @@ class FilerHandler(SimpleHTTPRequestHandler):
             classname = "drive-item"
             linkname = drive+"/"
                 # Note: a link to a directory displays with @ and links with /
-            r.append('<a href="%s" title="%s"><li class="directory-item %s">%s</li></a>'
+            r.append('<a href="%s" title="%s" meta-id="%s"class="directory-link"><li class="directory-item %s">%s</li></a>'
                         % (
                             urllib.parse.quote(linkname, errors='surrogatepass'),
                             drive,
+                            hash(drive),
                             classname, 
                             drive
                         )
