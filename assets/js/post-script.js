@@ -5,7 +5,10 @@ var searchTxt = document.querySelector("#search-text")
 var searchCat = document.querySelector("#category")
 var dirListNode = document.querySelector(".directory-list")
 var dirListItems = document.querySelectorAll(".directory-link")
-searchBtn.addEventListener("click", (e)=>{
+searchTxt.addEventListener("keyup", search)
+searchBtn.addEventListener("click", search)
+
+function search () {
     var term = searchTxt.value
     if(term.trim()!="" && term!=null){
         if(searchCat.value=="this"){
@@ -18,11 +21,11 @@ searchBtn.addEventListener("click", (e)=>{
     } else {
         dirListNode.replaceChildren(...dirListItems)
     }
-})
+}
 
 function searchThisDirectory(term) {
     var filter = Object.values(dirListItems).filter((f)=>{
-        return f.getAttribute("meta-name").includes(term)
+        return f.getAttribute("meta-name").toLowerCase().includes(term.toLowerCase())
     })
     dirListNode.replaceChildren(...filter)
 }

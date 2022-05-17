@@ -15,10 +15,10 @@ Basically, if Windows Explorer haven't evolved yet to have browser-like tabs - y
 
 1. [x] (For windows) Main page should display all drives
 2. [ ] Tidy up navigation page template
-3. [ ] (See **Disclaimer**) Is it possible to verify origin of click while running programs?
 4. [x] Search in current directory
 5. [ ] Search in other directories
 6. [ ] Linux based directory structure support
+3. [ ] (See **Disclaimer**) Is it possible to verify origin of click while running programs?
 
 ## Disclaimer
 
