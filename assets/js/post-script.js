@@ -13,10 +13,8 @@ function search () {
     if(term.trim()!="" && term!=null){
         if(searchCat.value=="this"){
             searchThisDirectory(term)
-        } else if (searchCat.value=="child") {
-
         } else if (searchCat.value=="all") {
-
+            // this will need some work
         }
     } else {
         dirListNode.replaceChildren(...dirListItems)

@@ -69,6 +69,14 @@ class FilerHandler(SimpleHTTPRequestHandler):
                     HTTPStatus.NOT_FOUND,
                     "No permission to list directory")
                 return None
+        elif path=='/search':
+            try:
+                encoded = self.list_search(path)
+            except OSError:
+                self.send_error(
+                    HTTPStatus.NOT_FOUND,
+                    "No permission to list directory")
+                return None
         else:
             try:
                 encoded = self.list_dir(path)
@@ -178,6 +186,70 @@ class FilerHandler(SimpleHTTPRequestHandler):
             app, 
             postScript,
             title,
+            title
+        )
+        encoded = page.encode(enc, 'surrogateescape')
+        return encoded
+    
+    def list_search(self, path):
+        term = urllib.parse.parse_qs(urllib.parse.urlparse(path))["q"]
+        list = os.listdir(path)
+        list.sort(key=lambda a: a.lower())
+        r = []
+        try:
+            displaypath = urllib.parse.unquote(self.path,
+                                               errors='surrogatepass')
+        except UnicodeDecodeError:
+            displaypath = urllib.parse.unquote(path)
+        displaypath = html.escape(displaypath, quote=False)
+        enc = sys.getfilesystemencoding()
+        r.append('<ul class="directory-list">')
+        for name in list:
+            fullname = os.path.join(path, name)
+            displayname = linkname = name
+            # Append / for directories or @ for symbolic links
+            if os.path.isdir(fullname):
+                classname = "folder-item"
+            else:
+                classname = "file-item"
+            if os.path.islink(fullname):
+                classname = "folder-item"
+                # Note: a link to a directory displays with @ and links with /
+            r.append('<a href="%s" title="%s" meta-name="%s" class="directory-link"><li class="directory-item %s">%s</li></a>'
+                        % (
+                            urllib.parse.quote(linkname, errors='surrogatepass'),
+                            html.escape(displayname, quote=False),
+                            html.escape(displayname, quote=False),
+                            classname, 
+                            html.escape(displayname, quote=False)
+                        )
+                    )
+        r.append('</ul>')
+        app = '\n'.join(r)
+        navurl = "/"
+        navitem = []
+        navitem.append('<a href="%s" class="navpath">%s</a>'
+            % (
+                navurl,
+                "Home"
+            )
+        )
+        for i in displaypath.split("/")[1:]:
+            navurl+="%s/" % (i)
+            navitem.append('<a href="%s" class="navpath">%s</a>'
+                    % (
+                        navurl,
+                        i
+                    )
+                )
+        navhead = " &#x276D; ".join(navitem)
+        title = " &#x276D; ".join(displaypath.split("/")[1:])
+        page = template.format(
+            style, 
+            preScript, 
+            app, 
+            postScript,
+            navhead,
             title
         )
         encoded = page.encode(enc, 'surrogateescape')
