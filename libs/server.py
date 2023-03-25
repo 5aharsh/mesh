@@ -7,7 +7,7 @@ import io
 
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler
-from .assetLoader import template, preScript, postScript, style
+from libs.assetLoader import template, preScript, postScript, style
 
 
 class FilerHandler(SimpleHTTPRequestHandler):
@@ -19,7 +19,7 @@ class FilerHandler(SimpleHTTPRequestHandler):
         and redirect while opening them
         """
         self.dirpath = self.translate_path(self.path)
-        if os.path.isfile(self.dirpath):
+        if os.path.isfile(self.dirpath) or self.dirpath.startswith('search'):
             process = os.system('"{0}"'.format(self.dirpath))
             redirect_path = '/'.join(self.path.split('/')[:-1]) + '/'
             self.send_response(HTTPStatus.MOVED_PERMANENTLY)
